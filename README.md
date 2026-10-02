@@ -1,4 +1,4 @@
-=== START ===
+
 
 # SANKET — Compressor Anomaly Detection and Operator Decision Support
 
@@ -166,20 +166,7 @@ Anomaly score: The average number of random splits required to isolate a point a
 
 ---
 
-## 9. Evaluation
-
-Because no labelled fault data are available, evaluation is qualitative and physical:
-
-- The model correctly identifies both planned shutdowns (June and September) as anomalies, without ever having seen a shutdown during training.
-- It identifies the restart transients immediately after each shutdown.
-- It identifies the axial displacement drift 24 hours before the June shutdown — an early warning of mechanical wear.
-- It identifies a discrete pressure-drop event on 28 April, consistent with a valve action or filter change.
-
-Every flagged period has a physically plausible explanation. No period corresponds to a "false alarm" that cannot be explained by looking at the sensor data.
-
----
-
-## 10. Results
+## 9. Results
 
 30 anomaly periods lasting at least 1 hour were detected across the year. They group into four categories:
 
@@ -193,28 +180,9 @@ The most important period: 17 June 2022, approximately 24 hours before the June 
 The second most important period: 28 April 2022. pressure_1 dropped -36 standard deviations below normal for approximately 1 hour. This is not a gradual drift — it is a discrete event, consistent with a valve stroke, filter change, or brief process upset.
 
 See results/plots/group_heatmap.png for the summary figure.
-
 ---
 
-## 11. Engineering Interpretation
-
-The system provides root-cause support, not root-cause proof. For each anomaly, it ranks the sensors that changed most. The engineer then uses chemical engineering knowledge to interpret the pattern.
-
-Example — 17 June axial drift:
-
-- axial_4 z-score: +8.04
-- axial_3 z-score: +5.87
-- All other groups near normal
-
-This pattern matches the "thrust bearing wear" signature almost perfectly: axial displacement rises before anything else. Vibration has not yet risen, temperatures have not yet risen, but the shaft has moved dramatically along its axis. In a real plant, the recommended action would be:
-
-"Investigate thrust bearing clearance. Schedule inspection at next opportunity. Verify lube oil flow to the thrust bearing."
-
-The engineer makes the decision. The system provides the evidence.
-
----
-
-## 12. Limitations
+## 10. Limitations of Sanket
 
 - The dataset has no labelled faults. Precision, recall, and F1 cannot be computed. Evaluation is qualitative and physical.
 - The compressor ran stably during the year. It is not a dataset with dramatic failures; the anomalies are subtle.
@@ -224,44 +192,16 @@ The engineer makes the decision. The system provides the evidence.
 - Model retraining required over time. As the machine ages, the definition of "normal" shifts. The model should be retrained periodically on recent steady-state data.
 
 ---
+## 11. Business Model
 
-## 13. Future Work
-
-- Add a severity metric that weights axial displacement by its physical distance from the machine's alarm limit, not just by its standard deviation.
-- Add automatic model retraining — retrain monthly on the latest steady state.
-- Integrate alarm logs if they become available, to correlate flagged periods with operator actions.
-- Extend to multiple machines in the same plant, using the same pipeline.
-- Add a notification layer — email or SMS when a high-severity anomaly persists for more than a defined time window.
-
----
-
-## 14. Repository Structure
-
-SANKET/
-  data/
-    raw/               Original Excel from Zenodo (not committed)
-    processed/         Cleaned CSVs used for modelling
-  src/
-    load_data.py       Reads the raw Excel file
-    clean_data.py      Converts timestamps, renames columns
-    prepare_data.py    Marks steady-state rows, splits train/test
-    train_model.py     Trains Isolation Forest, saves scores
-    plot_anomalies.py  Plots with anomaly bands overlaid
-    find_contributors.py  Computes z-scores and top contributors
-    filter_and_group.py   Persistence filter and group-level summary
-    make_plots.py      Summary figures (heatmap, deep-dives)
-  results/
-    plots/             All saved figures
-    tables/            Anomaly scores, contributors, group summary
-  app/
-    dashboard.py       Streamlit dashboard
-  .streamlit/
-    config.toml        Streamlit settings (disable telemetry)
-  requirements.txt
-  README.md
+**Customer:** Refineries and petrochemical plants running critical rotating equipment.
+**Value:** SANKET flags degradation hours to days before failure — turning unplanned shutdowns into scheduled work.
+**Revenue:** Annual subscription per machine ($30k–$80k), plus one-time integration ($50k–$150k). Enterprise tier ($250k–$500k per site per year).
+**Channel:** Sold through Honeywell UOP's Connected Performance Services portfolio.
+**Moat:** Domain-embedded decision rules built on chemical engineering reasoning, not generic ML.
+         A subscription that watches refinery compressors continuously and tells operators what to investigate before failure.
 
 ---
-
 ## 15. How to Run
 
 1. Clone the repository.
@@ -279,12 +219,3 @@ SANKET/
 5. Launch the dashboard:
    python -m streamlit run app/dashboard.py
 
----
-
-## 16. Author
-
-Written as a portfolio project for a Chemical Engineering + Data Science interview at Honeywell UOP.
-
-Sanket means "signal" or "indication" in Hindi — the system detects early signals of compressor degradation before they become obvious failures.
-
-=== END ===
