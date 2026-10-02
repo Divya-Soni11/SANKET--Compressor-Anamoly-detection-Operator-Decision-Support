@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Streamlit local config (may contain machine-specific paths)
+.streamlit_config/
+
+# Data files — too large for Git, hosted on Zenodo instead
+data/raw/*.xlsx
+data/raw/*.csv
+
+# Processed data (reproducible from raw)
+data/processed/*.csv
+
+# Result files (reproducible from code)
+results/tables/*.csv
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
