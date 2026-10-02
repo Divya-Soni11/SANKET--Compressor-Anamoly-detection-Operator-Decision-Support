@@ -16,11 +16,6 @@ env/
 data/raw/*.xlsx
 data/raw/*.csv
 
-# Processed data (reproducible from raw)
-data/processed/*.csv
-
-# Result files (reproducible from code)
-results/tables/*.csv
 
 # OS files
 .DS_Store
