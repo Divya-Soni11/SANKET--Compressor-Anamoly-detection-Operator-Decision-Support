@@ -2,6 +2,11 @@
 
 # SANKET — Compressor Anomaly Detection and Operator Decision Support
 
+**Live demo:** [sanket-anamoly-detector-operator-decision-supporter.streamlit.app](https://sanket-anamoly-detector-operator-decision-supporter.streamlit.app/)
+
+**Dataset:** [Refinery Compressor Sensor Data (RCSD-1YD) — Zenodo](https://zenodo.org/records/14866092)
+
+
 An unsupervised anomaly detection system for a refinery centrifugal compressor, built with real production-plant data. The system learns what normal operation looks like, flags periods when the compressor behaved abnormally, and ranks the sensors that contributed most to each anomaly — providing root-cause support, not root-cause proof.
 
 ---
