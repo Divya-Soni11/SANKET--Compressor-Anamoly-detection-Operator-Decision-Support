@@ -195,11 +195,13 @@ See results/plots/group_heatmap.png for the summary figure.
 ## 11. Business Model
 
 **Customer:** Refineries and petrochemical plants running critical rotating equipment.
+
 **Value:** SANKET flags degradation hours to days before failure — turning unplanned shutdowns into scheduled work.
+
 **Revenue:** Annual subscription per machine ($30k–$80k), plus one-time integration ($50k–$150k). Enterprise tier ($250k–$500k per site per year).
+
 **Channel:** Sold through Honeywell UOP's Connected Performance Services portfolio.
-**Moat:** Domain-embedded decision rules built on chemical engineering reasoning, not generic ML.
-         A subscription that watches refinery compressors continuously and tells operators what to investigate before failure.
+A subscription that watches refinery compressors continuously and tells operators what to investigate before failure.
 
 ---
 ## 15. How to Run
